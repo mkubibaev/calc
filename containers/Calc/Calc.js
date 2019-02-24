@@ -1,22 +1,16 @@
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, View, Text} from "react-native";
+import {connect} from "react-redux";
+import {StyleSheet, View} from "react-native";
 import CalcDisplay from "../../components/CalcDisplay/CalcDisplay";
 import CalcButtons from "../../components/CalcButtons/CalcButtons";
+import {enterSymbol} from "../../store/actions/calcActions";
 
-export default class Calc extends Component {
-    state = {
-        count: 0
-    };
-
-    increment = () => {
-        this.setState({count: this.state.count + 1})
-    };
-
+class Calc extends Component {
     render() {
         return (
             <View style={styles.calc}>
-                <CalcDisplay value={this.state.count}/>
-                <CalcButtons inc={this.increment}/>
+                <CalcDisplay value={this.props.calcString}/>
+                <CalcButtons touched={this.props.enterSymbol}/>
             </View>
         );
     }
@@ -28,8 +22,15 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         padding: 20,
         backgroundColor: '#f0f0f0',
-    },
-    button: {
-        color: 'red',
     }
 });
+
+const mapStateToProps = state => ({
+    calcString: state.calcString,
+});
+
+const mapDispatchToProps = dispatch => ({
+    enterSymbol: value => dispatch(enterSymbol(value))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calc);

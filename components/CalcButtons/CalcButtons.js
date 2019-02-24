@@ -2,80 +2,38 @@ import React from 'react';
 import {View, TouchableHighlight, Text, StyleSheet} from "react-native";
 
 const CalcButtons = props => {
+    const buttons = [
+        ['AC', '%', '⌫', '/'],
+        ['7', '8', '9', 'x'],
+        ['4', '5', '6', '-'],
+        ['1', '2', '3', '+'],
+        ['0', '.', '=']
+    ];
+
     return (
         <View style={{display: 'flex'}}>
-            <View style={styles.keyboardRow}>
-                <TouchableHighlight underlayColor="#ccc" style={styles.button} onPress={props.inc}>
-                    <Text style={{...styles.buttonText}}>AC</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>%</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>⌫</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>/</Text>
-                </TouchableHighlight>
-            </View>
-            <View style={styles.keyboardRow}>
-                <TouchableHighlight underlayColor="#ccc" style={styles.button} onPress={props.inc}>
-                    <Text style={styles.buttonText}>7</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>8</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>9</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>x</Text>
-                </TouchableHighlight>
-            </View>
-            <View style={styles.keyboardRow}>
-                <TouchableHighlight underlayColor="#ccc" style={styles.button} onPress={props.inc}>
-                    <Text style={styles.buttonText}>4</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>5</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>6</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>-</Text>
-                </TouchableHighlight>
-            </View>
-            <View style={styles.keyboardRow}>
-                <TouchableHighlight underlayColor="#ccc" style={styles.button} onPress={props.inc}>
-                    <Text style={styles.buttonText}>1</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>2</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>3</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>+</Text>
-                </TouchableHighlight>
-            </View>
-            <View style={styles.keyboardRow}>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>0</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={styles.button}>
-                    <Text style={styles.buttonText}>.</Text>
-                </TouchableHighlight>
-                <TouchableHighlight style={{
-                    ...styles.button,
-                    backgroundColor: 'darkorange',
-                    flexGrow: 1.9,
-                    flexBasis: 'auto',
-                }}>
-                    <Text style={{...styles.buttonText, color: '#fff'}}>=</Text>
-                </TouchableHighlight>
-            </View>
+            {buttons.map((row, rowIndex) => (
+                <View style={styles.keyboardRow} key={rowIndex}>
+                    {row.map((btn, btnIndex) => {
+                        let btnStyles = styles.button;
+
+                        if (rowIndex === 4 && btnIndex === 2) {
+                            btnStyles = styles.buttonLg;
+                        }
+
+                        return (
+                            <TouchableHighlight
+                                key={btn}
+                                underlayColor="#ccc"
+                                style={btnStyles}
+                                onPress={() => props.touched(btn)}
+                            >
+                                <Text style={styles.buttonText}>{btn}</Text>
+                            </TouchableHighlight>
+                        )
+                    })}
+                </View>
+            ))}
         </View>
     );
 };
@@ -88,9 +46,15 @@ const styles = StyleSheet.create({
     button: {
         flexGrow: 1,
         flexBasis: 1,
-        paddingVertical:  20,
+        paddingVertical: 20,
         margin: 2,
         backgroundColor: '#fff'
+    },
+    buttonLg: {
+        flexGrow: 1.9,
+        margin: 2,
+        paddingVertical: 20,
+        backgroundColor: 'orange',
     },
     buttonText: {
         textAlign: 'center',

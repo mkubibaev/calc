@@ -12,7 +12,7 @@ const CalcDisplay = props => {
             backgroundColor: '#fff',
             marginBottom: 10
         }}>
-            {props.value}
+            {props.value ? props.value : 0}
         </Text>
     );
 };
