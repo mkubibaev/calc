@@ -3,14 +3,22 @@ import {connect} from "react-redux";
 import {StyleSheet, View} from "react-native";
 import CalcDisplay from "../../components/CalcDisplay/CalcDisplay";
 import CalcButtons from "../../components/CalcButtons/CalcButtons";
-import {enterSymbol} from "../../store/actions/calcActions";
+import {calculate, clearAll, clearBySymbol, enterSymbol} from "../../store/actions/calcActions";
 
 class Calc extends Component {
     render() {
         return (
             <View style={styles.calc}>
-                <CalcDisplay value={this.props.calcString}/>
-                <CalcButtons touched={this.props.enterSymbol}/>
+                <CalcDisplay
+                    calcString={this.props.calcString}
+                    result={this.props.result}
+                />
+                <CalcButtons
+                    onEnterSymbol={this.props.enterSymbol}
+                    onClear={this.props.clearAll}
+                    onClearBySymbol={this.props.clearBySymbol}
+                    onCalculate={this.props.calculate}
+                />
             </View>
         );
     }
@@ -27,10 +35,14 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     calcString: state.calcString,
+    result: state.result
 });
 
 const mapDispatchToProps = dispatch => ({
-    enterSymbol: value => dispatch(enterSymbol(value))
+    enterSymbol: value => dispatch(enterSymbol(value)),
+    clearAll: () => dispatch(clearAll()),
+    clearBySymbol: () => dispatch(clearBySymbol()),
+    calculate: () => dispatch(calculate()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Calc);

@@ -1,20 +1,34 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 
 const CalcDisplay = props => {
     return (
-        <Text style={{
-            color: '#000',
-            fontSize: 36,
-            paddingHorizontal: 5,
-            paddingVertical: 10,
-            textAlign: 'right',
-            backgroundColor: '#fff',
-            marginBottom: 10
-        }}>
-            {props.value ? props.value : 0}
-        </Text>
+        <View style={styles.display}>
+            <Text style={styles.result}>
+                {props.result}
+            </Text>
+            <Text style={styles.operand}>
+                {props.calcString ? props.calcString : 0}
+            </Text>
+        </View>
     );
 };
+
+const styles = StyleSheet.create({
+    display: {
+        display: 'flex',
+        flexDirection: 'column-reverse',
+        marginBottom: 5,
+        paddingHorizontal: 5,
+    },
+    operand: {
+        fontSize: 38,
+        textAlign: 'right',
+    },
+    result: {
+        fontSize: 46,
+        textAlign: 'right',
+    }
+});
 
 export default CalcDisplay;
